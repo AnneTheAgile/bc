@@ -1,0 +1,910 @@
+Git.SWC.Video.MINE.140430w.txt
+
+====================================================
+.[]VIDEO NOTES TUTORIAL 
+
+
+# SEE , use pretty log with details and tag info
+$  cat ~/.profile | grep "gl"
+alias gl='git logv '
+
+$ cat ~/.gitconfig | grep logv
+  logv = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+
+
+# FIND PRIOR
+
+$ # now pretend I don't know which commit my correct file is in
+$ # but I know it should have all those a's
+$ # aaaaaaaaaaaaa
+
+# http://stackoverflow.com/questions/21999594/can-plain-git-search-grep-within-a-path
+
+$ git log -p -S "aaaaaaaaaaaaa" -- a.txt
+
+# Shows the diffs for each one and seeks when ADD/DEL the given string in ENTIRETY, as opposed to being in the diff
+#  -p                 Generate patch (see section on generating patches).
+#  -S <string>        Look for differences that introduce or remove an instance of
+                   <string>. Note that this is different than the string simply
+                   appearing in diff output.
+
+
+
+FIND  CURRENT
+# Maybe Easier to find Blame if know person/commit existing in the file
+
+# Can NOT just look at what's in a.txt NOW
+$ # http://learnxinyminutes.com/docs/git/
+$ git grep 'aaaaaaaaaaaaa' -- 'a.txt'
+
+
+
+TAG what liked
+
+$ git checkout f728ed0
+Note: checking out 'f728ed0'.
+
+You are in 'detached HEAD' state. 
+...//git info
+HEAD is now at f728ed0... 2 files content now modified to a's and 2's
+$
+$
+$ # NOTE DETACHED WARNING
+$
+$ # Now the file is back;
+$ ls
+a.txt	b.txt
+$ cat a.txt
+aaaaaaaaaaaaa
+$ # that was the old version
+$
+$ git status
+# HEAD detached at f728ed0
+nothing to commit, working directory clean
+$
+$ git tag 1-before-delete-a
+$
+$ gl
+
+
+GO BACK
+
+$ git checkout master
+
+
+
+SEE PATCHES
+
+# patches for a single file, all time
+$ git log -p  -- b.txt
+$ gl
+
+# patch for one commit
+$ git show AShaCOMMIT
+
+
+CHANGE AND ADD
+
+$ echo "bcbcbc" > b.txt
+$ git add b.txt
+$ git status
+
+CHANGE AGAIN RE-ADD
+
+
+EDIT MSG
+$ git commit --amend
+
+
+REVERT BY GETTING
+$ git checkout 1-before-delete-a a.txt
+
+# see patch Tba
+$ git diff --staged
+
+
+
+====================================================
+.[]TODO BUG no profile!  
+====================================================
+.[]
+
+
+Last login: Wed Apr 30 07:46:50 on ttys001
+Top of: .bash_profile, run with ~/.bash_profile, already a+x.
+-bash: /opt/boxen/env.sh: No such file or directory
+Done /opt/boxen/env.sh
+-bash: $: command not found
+-bash: $: command not found
+End of: .bash_profile
+Annes-MacBook-Pro:~ amoroney$ cd ./src/
+Annes-MacBook-Pro:src amoroney$ ls
+131205r.SwIPhone.IosDev3hrs.TurnToTech.io.131205r.DIY
+131218w.flaskqs.txt
+Hungry1
+PuppetfileWrongWoEc2
+bc-hs-am
+bc-hs-cat
+bc-ipynb
+bc-js
+bc-mdb
+bc-python
+bcdo
+csrspec
+django
+foss-meetup-whereami
+hackForbesColleges
+hackForbesDjango
+hackNycNoise
+importeroo
+microblog
+nythack
+our-boxen
+our-boxenaka.Opt.Boxen.Repo
+pacto-thtw
+rails
+rcompose
+rmtry
+rspec-dev-theirs
+salt
+swc-meta
+swc-tries
+swcarpentrybc
+tddPlay
+tryGit
+tryflask
+ttt
+zPrjsPycharm
+zPrjsRubyMine
+Annes-MacBook-Pro:src amoroney$ cd tryGit/
+$ ls
+a.txt	b.txt
+$ ls -Flah
+total 16
+drwxr-xr-x   5 amoroney  staff   170B Apr 28 13:45 ./
+drwxr-xr-x  40 amoroney  staff   1.3K Apr 22 14:30 ../
+drwxr-xr-x  12 amoroney  staff   408B Apr 28 16:56 .git/
+-rw-r--r--   1 amoroney  staff    11B Apr 28 13:45 a.txt
+-rw-r--r--   1 amoroney  staff    14B Apr 28 13:45 b.txt
+$
+$
+$ gl
+-bash: gl: command not found
+$ gv
+-bash: gv: command not found
+$ source ~/.profile
+====================================================
+.[]
+$ pwd
+/Users/amoroney/src/tryGit
+
+$ gl
+* ef8f8fc 2014-04-01 | add back an entirely 'different'  a.txt (HEAD, tag: v1-be
+* f760e35 2014-04-01 | deleted a.txt so can show other things [AnneTheAgile]
+* f728ed0 2014-04-01 | 2 files content now modified to a's and 2's [AnneTheAgile
+* 7301f20 2014-04-01 | 2 files both now have content  added [AnneTheAgile]
+* 1f8ec1e 2014-04-01 | 2 files, a, b, .txt added [AnneTheAgile]
+$
+$
+$ git branch -v
+* master ef8f8fc add back an entirely 'different'  a.txt
+$
+$
+$ git log --pretty=oneline
+ef8f8fc608e5b4755055a2d098eb823ea43e858e add back an entirely 'different'  a.txt
+f760e356053697eeb15b95e71abacb9892c8c1f7 deleted a.txt so can show other things
+f728ed0582ff1b23f03dfffecbdd9b695d1a663c 2 files content now modified to a's and
+7301f20c605dfa463150704332201348ac59d4f9 2 files both now have content  added
+1f8ec1e8c998f530d5c1cb941605b41d776bb3f6 2 files, a, b, .txt added
+$
+$ cat ~/.profile gl
+# source /opt/boxen/env.sh # 2014-04-23Wed No longer using boxen
+
+# Haskell I think was to fix up GHC to work with Snap? LT 140428m
+PATH=~/Library/Haskell/ghc-7.6.3/lib/:$PATH
+PATH=~/Library/Haskell/bin:$PATH
+
+# Grep for text in my CLI History. 140428m
+# http://www.talug.org/events/20030709/cmdline_history.html
+# NB Ensure NO SPACE around the equals sign.
+alias hisg='history | grep -i '
+
+
+# Git Anne's  git log verbose
+alias gv='git logv '
+alias gl='git logv '
+# GitImmersion.com suggestions
+alias gs='git status '
+alias ga='git add '
+alias gb='git branch '
+alias gc='git commit'
+alias gd='git diff'
+alias go='git checkout '
+alias gk='gitk --all&'
+alias gx='gitx --all'
+
+alias got='git '
+alias get='git '
+cat: gl: No such file or directory
+$
+$
+$ git logv
+* ef8f8fc 2014-04-01 | add back an entirely 'different'  a.txt (HEAD, tag: v1-be
+* f760e35 2014-04-01 | deleted a.txt so can show other things [AnneTheAgile]
+* f728ed0 2014-04-01 | 2 files content now modified to a's and 2's [AnneTheAgile
+* 7301f20 2014-04-01 | 2 files both now have content  added [AnneTheAgile]
+* 1f8ec1e 2014-04-01 | 2 files, a, b, .txt added [AnneTheAgile]
+$
+$ cat ~/.gitconfig | grep logv
+  logv = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+$
+====================================================
+.[]
+
+====================================================
+.[]TAG
+
+$
+$ git checkout f728ed0
+Note: checking out 'f728ed0'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b new_branch_name
+
+HEAD is now at f728ed0... 2 files content now modified to a's and 2's
+$
+$
+$ # NOTE DETACHED WARNING
+$
+$ # Now the file is back;
+$ ls
+a.txt	b.txt
+$ cat a.txt
+aaaaaaaaaaaaa
+$ # that was the old version
+$
+$ git status
+# HEAD detached at f728ed0
+nothing to commit, working directory clean
+$
+$ git tag 1-before-delete-a
+$
+$ gl
+* f728ed0 2014-04-01 | 2 files content now modified to a's and 2's (HEAD, tag: 1
+* 7301f20 2014-04-01 | 2 files both now have content  added [AnneTheAgile]
+* 1f8ec1e 2014-04-01 | 2 files, a, b, .txt added [AnneTheAgile]
+$
+$ gl
+* f728ed0 2014-04-01 | 2 files content now modified to a's and 2's (HEAD, tag: 1-before-delete-a) [Anne
+* 7301f20 2014-04-01 | 2 files both now have content  added [AnneTheAgile]
+* 1f8ec1e 2014-04-01 | 2 files, a, b, .txt added [AnneTheAgile]
+$
+$ # so now see I have a tag. Let's go back to master
+$ git checkout master
+Previous HEAD position was f728ed0... 2 files content now modified to a's and 2's
+Switched to branch 'master'
+$
+$ gl
+* ef8f8fc 2014-04-01 | add back an entirely 'different'  a.txt (HEAD, tag: v1-beta, master) [AnneTheAgi
+* f760e35 2014-04-01 | deleted a.txt so can show other things [AnneTheAgile]
+* f728ed0 2014-04-01 | 2 files content now modified to a's and 2's (tag: 1-before-delete-a) [AnneTheAgi
+* 7301f20 2014-04-01 | 2 files both now have content  added [AnneTheAgile]
+* 1f8ec1e 2014-04-01 | 2 files, a, b, .txt added [AnneTheAgile]
+$
+$ # so now the thing I'm  fixing is more visible
+$
+====================================================
+.[]FIND
+====================================================
+.[]
+$ # now pretend I don't know which commit my correct file is in
+$ # but I know it should have all those a's
+$ # aaaaaaaaaaaaa
+$
+$ # hunt the log
+$ git log -p -S "aaaaaaaaaaaaa" -- a.txt
+commit f760e356053697eeb15b95e71abacb9892c8c1f7
+Author: AnneTheAgile <cqcinfo@yahoo.com>
+Date:   Tue Apr 1 16:28:45 2014 -0400
+
+    deleted a.txt so can show other things
+
+diff --git a/a.txt b/a.txt
+deleted file mode 100644
+index d200834..0000000
+--- a/a.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-aaaaaaaaaaaaa
+
+commit f728ed0582ff1b23f03dfffecbdd9b695d1a663c
+Author: AnneTheAgile <cqcinfo@yahoo.com>
+Date:   Tue Apr 1 15:55:52 2014 -0400
+
+    2 files content now modified to a's and 2's
+
+diff --git a/a.txt b/a.txt
+index 67c394d..d200834 100644
+--- a/a.txt
++++ b/a.txt
+@@ -1 +1 @@
+-asdfjasdlf
++aaaaaaaaaaaaa
+$
+$
+$ # so f728e has the a's
+$ gl
+* ef8f8fc 2014-04-01 | add back an entirely 'different'  a.txt (HEAD, tag: v1-beta, master) [AnneTheAgi
+* f760e35 2014-04-01 | deleted a.txt so can show other things [AnneTheAgile]
+* f728ed0 2014-04-01 | 2 files content now modified to a's and 2's (tag: 1-before-delete-a) [AnneTheAgi
+* 7301f20 2014-04-01 | 2 files both now have content  added [AnneTheAgile]
+* 1f8ec1e 2014-04-01 | 2 files, a, b, .txt added [AnneTheAgile]
+$
+$ # it's thus the only one with the a's, our tagged item.
+$
+====================================================
+.[]FUTURE Reflog 
+
+
+$ git reflog
+ef8f8fc HEAD@{0}: checkout: moving from f728ed0582ff1b23f03dfffecbdd9b695d1a663c to master
+f728ed0 HEAD@{1}: checkout: moving from master to f728ed0
+ef8f8fc HEAD@{2}: checkout: moving from 345a75a50c5cc4f7bc7d8da1bccface68b01ec2c to master
+345a75a HEAD@{3}: commit: add detached head text to a.txt during checkout of commit 7301f20.
+7301f20 HEAD@{4}: checkout: moving from master to 7301f20
+ef8f8fc HEAD@{5}: commit: add back an entirely 'different' a.txt
+f760e35 HEAD@{6}: commit: deleted a.txt so can show other things
+f728ed0 HEAD@{7}: commit: 2 files content now modified to a's and 2's
+7301f20 HEAD@{8}: commit: 2 files both now have content added
+1f8ec1e HEAD@{9}: commit (initial): 2 files, a, b, .txt added
+$
+$ # saves only like 30d
+$
+====================================================
+.[]FIND#2
+
+
+$ # another way to grep
+$ # http://learnxinyminutes.com/docs/git/
+$ git grep 'aaaaaaaaaaaaa' -- 'a.txt'
+$ # so that showed us only the CURRENT file, ie;
+$ cat a.txt
+new-aaaaaa
+$
+$ # since our commit 1-before-delete-a ONLY changed the thing we wish to undo, let's revert it and let it be stageable
+$ # will fail b a.txt already here
+
+
+$ git revert 1-before-delete-a
+error: could not revert f728ed0... 2 files content now modified to a's and 2's
+hint: after resolving the conflicts, mark the corrected paths
+hint: with 'git add <paths>' or 'git rm <paths>'
+hint: and commit the result with 'git commit'
+$
+$ git status
+# On branch master
+# You are currently reverting commit f728ed0.
+#   (fix conflicts and run "git revert --continue")
+#   (use "git revert --abort" to cancel the revert operation)
+#
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   b.txt
+#
+# Unmerged paths:
+#   (use "git reset HEAD <file>..." to unstage)
+#   (use "git add <file>..." to mark resolution)
+#
+#	both modified:      a.txt
+#
+$ cat b.txt
+bbbb
+$ cat a.txt
+<<<<<<< HEAD
+new-aaaaaa
+=======
+asdfjasdlf
+>>>>>>> parent of f728ed0... 2 files content now modified to a's and 2's
+$
+
+
+$ # oops didn't want to UNDO the a's, which is f728, ie 1-before-delete-a
+$ # so let's de-conflict a.txt to use what I had before started
+$ # First, let's ensure that a.txt has new-aaaaaa already committed
+$ # since I forgot to git status first!
+
+
+$ git log -p -S "new-aaaaaa" -- a.txt
+commit ef8f8fc608e5b4755055a2d098eb823ea43e858e
+Author: AnneTheAgile <cqcinfo@yahoo.com>
+Date:   Tue Apr 1 16:29:29 2014 -0400
+
+    add back an entirely 'different'  a.txt
+
+diff --git a/a.txt b/a.txt
+new file mode 100644
+index 0000000..ec11976
+--- /dev/null
++++ b/a.txt
+@@ -0,0 +1 @@
++new-aaaaaa
+
+
+$ # tada, it was already committed, so no harm to ignore the conflict
+
+$ git reset HEAD a.txt
+Unstaged changes after reset:
+M	a.txt
+$ git status
+# On branch master
+# You are currently reverting commit f728ed0.
+#   (all conflicts fixed: run "git revert --continue")
+#   (use "git revert --abort" to cancel the revert operation)
+#
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   b.txt
+#
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   a.txt
+#
+$ cat a.txt
+<<<<<<< HEAD
+new-aaaaaa
+=======
+asdfjasdlf
+>>>>>>> parent of f728ed0... 2 files content now modified to a's and 2's
+$
+$ # hmm
+$ # so maybe need two part fix, see the note I have above
+$ # in git's msg
+$ git checkout -- a.txt
+$ cat a.txt
+new-aaaaaa
+$ git status
+# On branch master
+# You are currently reverting commit f728ed0.
+#   (all conflicts fixed: run "git revert --continue")
+#   (use "git revert --abort" to cancel the revert operation)
+#
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   b.txt
+#
+$ # so now back aok for a.txt
+$
+$ cat b.txt
+bbbb
+
+
+$ git diff b.txt
+
+$ git log -p  -- b.txt
+commit f728ed0582ff1b23f03dfffecbdd9b695d1a663c
+Author: AnneTheAgile <cqcinfo@yahoo.com>
+Date:   Tue Apr 1 15:55:52 2014 -0400
+
+    2 files content now modified to a's and 2's
+
+diff --git a/b.txt b/b.txt
+index b433656..5d821c7 100644
+--- a/b.txt
++++ b/b.txt
+@@ -1 +1 @@
+-bbbb
++2222222222222
+
+commit 7301f20c605dfa463150704332201348ac59d4f9
+Author: AnneTheAgile <cqcinfo@yahoo.com>
+Date:   Tue Apr 1 15:54:37 2014 -0400
+
+$
+$
+$ # oops ensure didn't CR too fast
+
+
+$ git log -p  -- b.txt
+
+
+commit f728ed0582ff1b23f03dfffecbdd9b695d1a663c
+Author: AnneTheAgile <cqcinfo@yahoo.com>
+Date:   Tue Apr 1 15:55:52 2014 -0400
+
+    2 files content now modified to a's and 2's
+
+diff --git a/b.txt b/b.txt
+index b433656..5d821c7 100644
+--- a/b.txt
++++ b/b.txt
+@@ -1 +1 @@
+-bbbb
++2222222222222
+
+commit 7301f20c605dfa463150704332201348ac59d4f9
+Author: AnneTheAgile <cqcinfo@yahoo.com>
+Date:   Tue Apr 1 15:54:37 2014 -0400
+
+    2 files both now have content  added
+
+diff --git a/b.txt b/b.txt
+index e69de29..b433656 100644
+--- a/b.txt
++++ b/b.txt
+@@ -0,0 +1 @@
++bbbb
+
+commit 1f8ec1e8c998f530d5c1cb941605b41d776bb3f6
+Author: AnneTheAgile <cqcinfo@yahoo.com>
+Date:   Tue Apr 1 15:53:38 2014 -0400
+
+    2 files, a, b, .txt added
+
+diff --git a/b.txt b/b.txt
+new file mode 100644
+index 0000000..e69de29
+$
+$
+$ gl
+* ef8f8fc 2014-04-01 | add back an entirely 'different'  a.txt (HEAD, tag: v1-beta, master) [AnneTheAgi
+* f760e35 2014-04-01 | deleted a.txt so can show other things [AnneTheAgile]
+* f728ed0 2014-04-01 | 2 files content now modified to a's and 2's (tag: 1-before-delete-a) [AnneTheAgi
+* 7301f20 2014-04-01 | 2 files both now have content  added [AnneTheAgile]
+* 1f8ec1e 2014-04-01 | 2 files, a, b, .txt added [AnneTheAgile]
+$ cat b
+cat: b: No such file or directory
+$ cat b.txt
+bbbb
+$ # ok so actually the 4 b's are NOT in the latest repo, show that by;
+$ git diff ef8f8fc -- b.txt
+diff --git a/b.txt b/b.txt
+index 5d821c7..b433656 100644
+--- a/b.txt
++++ b/b.txt
+@@ -1 +1 @@
+-2222222222222
++bbbb
+$
+====================================================
+.[]STAT is messy LOG
+
+$ git log --stat
+commit ef8f8fc608e5b4755055a2d098eb823ea43e858e
+Author: AnneTheAgile <cqcinfo@yahoo.com>
+Date:   Tue Apr 1 16:29:29 2014 -0400
+
+    add back an entirely 'different'  a.txt
+
+ a.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit f760e356053697eeb15b95e71abacb9892c8c1f7
+Author: AnneTheAgile <cqcinfo@yahoo.com>
+Date:   Tue Apr 1 16:28:45 2014 -0400
+
+    deleted a.txt so can show other things
+
+ a.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit f728ed0582ff1b23f03dfffecbdd9b695d1a663c
+Author: AnneTheAgile <cqcinfo@yahoo.com>
+Date:   Tue Apr 1 15:55:52 2014 -0400
+
+    2 files content now modified to a's and 2's
+
+ a.txt | 2 +-
+ b.txt | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 7301f20c605dfa463150704332201348ac59d4f9
+Author: AnneTheAgile <cqcinfo@yahoo.com>
+Date:   Tue Apr 1 15:54:37 2014 -0400
+
+    2 files both now have content  added
+
+ a.txt | 1 +
+ b.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 1f8ec1e8c998f530d5c1cb941605b41d776bb3f6
+Author: AnneTheAgile <cqcinfo@yahoo.com>
+Date:   Tue Apr 1 15:53:38 2014 -0400
+
+    2 files, a, b, .txt added
+
+ a.txt | 0
+ b.txt | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+$
+====================================================
+.[]
+$
+$
+$ git status
+# On branch master
+# You are currently reverting commit f728ed0.
+#   (all conflicts fixed: run "git revert --continue")
+#   (use "git revert --abort" to cancel the revert operation)
+#
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   b.txt
+#
+$ cat b.txt
+bbbb
+$ echo "b5bbbb" > b.txt
+$ cat b.txt
+b5bbbb
+$ # so now it's definitely different from other entries in my history
+$ # hmm, better to make it a new letter
+$ echo "bcbcbc" > b.txt
+$ cat b.txt
+bcbcbc
+$ git commit -m "change b.txt to bcbcbc."
+[master 96db3e7] change b.txt to bcbcbc.
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ gl
+* 96db3e7 2014-04-30 | change b.txt to bcbcbc. (HEAD, master) [AnneTheAgile]
+* ef8f8fc 2014-04-01 | add back an entirely 'different'  a.txt (tag: v1-beta) [AnneTheAgile]
+* f760e35 2014-04-01 | deleted a.txt so can show other things [AnneTheAgile]
+* f728ed0 2014-04-01 | 2 files content now modified to a's and 2's (tag: 1-before-delete-a) [AnneTheAgi
+* 7301f20 2014-04-01 | 2 files both now have content  added [AnneTheAgile]
+* 1f8ec1e 2014-04-01 | 2 files, a, b, .txt added [AnneTheAgile]
+$
+$ git status
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   b.txt
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+$ git diff
+diff --git a/b.txt b/b.txt
+index b433656..75700c3 100644
+--- a/b.txt
++++ b/b.txt
+@@ -1 +1 @@
+-bbbb
++bcbcbc
+
+
+$ # to undo just the index, which now is goofed up thinking my conflict is there, use;
+$ # http://stackoverflow.com/questions/14078820/how-to-undo-git-add-before-commit
+$ git reset
+Unstaged changes after reset:
+M	b.txt
+
+
+$ cat b.txt
+bcbcbc
+$ git status
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   b.txt
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+
+
+$ git checkout -- b.txt
+$ git status
+# On branch master
+nothing to commit, working directory clean
+$ # ok so finally it thinks it's ok
+$ cat b.txt
+bbbb
+$ # hmm but I committed that
+
+$ gl
+* 96db3e7 2014-04-30 | change b.txt to bcbcbc. (HEAD, master) [AnneTheAgile]
+* ef8f8fc 2014-04-01 | add back an entirely 'different'  a.txt (tag: v1-beta) [AnneTheAgile]
+* f760e35 2014-04-01 | deleted a.txt so can show other things [AnneTheAgile]
+* f728ed0 2014-04-01 | 2 files content now modified to a's and 2's (tag: 1-before-delete-a) [AnneTheAgi
+* 7301f20 2014-04-01 | 2 files both now have content  added [AnneTheAgile]
+* 1f8ec1e 2014-04-01 | 2 files, a, b, .txt added [AnneTheAgile]
+$
+====================================================
+.[]PATCH for one item
+
+
+$ # http://stackoverflow.com/questions/17563726/git-diff-for-one-commit
+$ git show 96db
+commit 96db3e7e41014113699170478fcfe79cf8fb4c77
+Author: AnneTheAgile <cqcinfo@yahoo.com>
+Date:   Wed Apr 30 09:21:20 2014 -0400
+
+    change b.txt to bcbcbc.
+
+diff --git a/b.txt b/b.txt
+index 5d821c7..b433656 100644
+--- a/b.txt
++++ b/b.txt
+@@ -1 +1 @@
+-2222222222222
++bbbb
+$ # hmm, weird!!!
+$
+$ # MYBUG!!
+$
+$ # after each and EVERY file change, MUST RE-ADD
+$
+$ echo "bcbcbc" > b.txt
+$ git status
+# On branch master
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   b.txt
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+$ git add b.txt
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   b.txt
+#
+$ git diff
+$ cat b.txt
+bcbcbc
+$ git amend
+git: 'amend' is not a git command. See 'git --help'.
+
+Did you mean this?
+	imap-send
+
+
+$ git commit --amend
+[master 1e94d0d] change b.txt to bbbb - did NOT change to bcbcbc because that was 3rd change and didn't stage each one.
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$
+$ gl
+* 1e94d0d 2014-04-30 | change b.txt to bbbb - did NOT change to bcbcbc because that was 3rd change and
+* ef8f8fc 2014-04-01 | add back an entirely 'different'  a.txt (tag: v1-beta) [AnneTheAgile]
+* f760e35 2014-04-01 | deleted a.txt so can show other things [AnneTheAgile]
+* f728ed0 2014-04-01 | 2 files content now modified to a's and 2's (tag: 1-before-delete-a) [AnneTheAgi
+* 7301f20 2014-04-01 | 2 files both now have content  added [AnneTheAgile]
+* 1f8ec1e 2014-04-01 | 2 files, a, b, .txt added [AnneTheAgile]
+$
+$ git commit -m "change b.txt to bcbcbc - really, git add done so ok."
+# On branch master
+nothing to commit, working directory clean
+$ gl
+* 1e94d0d 2014-04-30 | change b.txt to bbbb - did NOT change to bcbcbc because that was 3rd change and
+* ef8f8fc 2014-04-01 | add back an entirely 'different'  a.txt (tag: v1-beta) [AnneTheAgile]
+* f760e35 2014-04-01 | deleted a.txt so can show other things [AnneTheAgile]
+* f728ed0 2014-04-01 | 2 files content now modified to a's and 2's (tag: 1-before-delete-a) [AnneTheAgi
+* 7301f20 2014-04-01 | 2 files both now have content  added [AnneTheAgile]
+* 1f8ec1e 2014-04-01 | 2 files, a, b, .txt added [AnneTheAgile]
+$
+$ cat b.txt
+bcbcbc
+$ git status
+# On branch master
+nothing to commit, working directory clean
+$
+====================================================
+.[]
+
+$ # hunt again different way for deletion of a.txt
+$ # http://stackoverflow.com/questions/953481/restore-a-deleted-file-in-a-git-repo
+$ git rev-list -n 1 HEAD -- a.txt
+ef8f8fc608e5b4755055a2d098eb823ea43e858e
+$ # NO, that is where I added it
+$ # OK,
+$ # Find the last commit that affected the given path.
+$
+====================================================
+.[]REVERT BY GETTING
+
+
+$ git checkout 1-before-delete-a a.txt
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   a.txt
+#
+$ cat a.txt
+aaaaaaaaaaaaa
+$ git diff
+$ git add a.txt
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   a.txt
+#
+$ git diff
+$ git diff --cached
+diff --git a/a.txt b/a.txt
+index ec11976..d200834 100644
+--- a/a.txt
++++ b/a.txt
+@@ -1 +1 @@
+-new-aaaaaa
++aaaaaaaaaaaaa
+$ # yes that's what I want
+$ # http://stackoverflow.com/questions/1587846/how-do-i-show-the-changes-which-have-been-staged
+$ # --cached means show the changes in the cache/index (i.e. staged changes) against the current HEAD
+
+
+$ git diff --staged
+diff --git a/a.txt b/a.txt
+index ec11976..d200834 100644
+--- a/a.txt
++++ b/a.txt
+@@ -1 +1 @@
+-new-aaaaaa
++aaaaaaaaaaaaa
+
+$ # --staged is a synonym for --cached.
+$
+$ # now let's add 'restore' into the file text so that I'll know it was restored, and it will be different
+$ echo "aaaaaRESTOREDaaaaaaaa" > a.txt
+$
+$ # note that staged no change yet
+$ git diff --staged
+diff --git a/a.txt b/a.txt
+index ec11976..d200834 100644
+--- a/a.txt
++++ b/a.txt
+@@ -1 +1 @@
+-new-aaaaaa
++aaaaaaaaaaaaa
+$
+$ cat a.txt
+aaaaaRESTOREDaaaaaaaa
+$ # despite my change.
+$ git add a.txt
+$ git diff --staged
+diff --git a/a.txt b/a.txt
+index ec11976..c89b5eb 100644
+--- a/a.txt
++++ b/a.txt
+@@ -1 +1 @@
+-new-aaaaaa
++aaaaaRESTOREDaaaaaaaa
+
+
+$ # now as I wish.
+$ git commit -m "Edited Restored a.txt from 1-before-delete-a ie commit f728ed0, to be now aaaaaRESTOREDaaaaaaaa"
+[master 171aaf9] Edited Restored a.txt from 1-before-delete-a ie commit f728ed0, to be now aaaaaRESTOREDaaaaaaaa
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$
+$ gl
+* 171aaf9 2014-04-30 | Edited Restored a.txt from 1-before-delete-a ie commit f728ed0, to be now aaaaaR
+* 1e94d0d 2014-04-30 | change b.txt to bbbb - did NOT change to bcbcbc because that was 3rd change and
+* ef8f8fc 2014-04-01 | add back an entirely 'different'  a.txt (tag: v1-beta) [AnneTheAgile]
+* f760e35 2014-04-01 | deleted a.txt so can show other things [AnneTheAgile]
+* f728ed0 2014-04-01 | 2 files content now modified to a's and 2's (tag: 1-before-delete-a) [AnneTheAgi
+* 7301f20 2014-04-01 | 2 files both now have content  added [AnneTheAgile]
+* 1f8ec1e 2014-04-01 | 2 files, a, b, .txt added [AnneTheAgile]
+$
+$ git status
+# On branch master
+nothing to commit, working directory clean
+$
+$
+$
